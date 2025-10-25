@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Personal Zira 🏎️ Ferrari Edition</title>
 <style>
 :root{
@@ -11,84 +11,70 @@
   --gray:#1c1c1c;
   --white:#fff;
 }
-body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;}
-/* brighter Ferrari background video */
+body{
+  margin:0;
+  font-family:Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--dark);
+  color:var(--white);
+  overflow-x:hidden;
+}
+/* Ferrari background */
 #bgVideo{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  object-fit:cover;z-index:-2;filter:brightness(85%);
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  z-index:-2;
+  filter:brightness(90%);
 }
 body::before{
-  content:"";position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.25);z-index:-1;
+  content:"";
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.25);
+  z-index:-1;
 }
-header{background:var(--ferrari-red);padding:1rem;text-align:center;font-size:1.6rem;font-weight:700;letter-spacing:.5px;}
+header{
+  background:var(--ferrari-red);
+  padding:1rem;text-align:center;
+  font-size:1.6rem;font-weight:700;letter-spacing:.5px;
+}
 .board-switch{text-align:center;margin:1rem;}
-button{cursor:pointer;border:none;border-radius:5px;padding:.6rem 1rem;font-weight:600;transition:.3s;}
+button{cursor:pointer;border:none;border-radius:5px;
+  padding:.6rem 1rem;font-weight:600;transition:.3s;}
 .active{background:var(--ferrari-red);color:var(--white);}
 .inactive{background:var(--gray);color:#bbb;}
 .add-btn{background:var(--ferrari-red);color:var(--white);margin-left:.5rem;}
-.board{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:0 1rem;}
+.board{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  flex-wrap:nowrap;overflow-x:auto;padding:0 1rem;
+}
 .column{
   background:rgba(28,28,28,0.65);
-  border-radius:10px;
-  min-width:22%;
-  padding:1rem;
-  box-shadow:0 0 10px rgba(0,0,0,.4);
+  border-radius:10px;min-width:22%;
+  padding:1rem;box-shadow:0 0 10px rgba(0,0,0,.4);
   backdrop-filter:blur(6px);
 }
-.column h2{text-align:center;border-bottom:2px solid var(--ferrari-red);padding-bottom:.5rem;margin-top:0;}
+.column h2{text-align:center;border-bottom:2px solid var(--ferrari-red);
+  padding-bottom:.5rem;margin-top:0;}
 .task{
   background:rgba(17,17,17,0.5);
   border-left:6px solid var(--ferrari-red);
   border-radius:6px;margin:.7rem 0;padding:.6rem;
   box-shadow:0 0 4px rgba(0,0,0,.3);
-  cursor:pointer;
-  backdrop-filter:blur(4px);
+  cursor:pointer;backdrop-filter:blur(4px);
 }
 .task small{color:#aaa;}
 .red{border-color:#ff3b30;} .orange{border-color:#ff9500;}
 .yellow{border-color:#ffd60a;} .green{border-color:#34c759;}
-/* modals */
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center;z-index:5;}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,.8);align-items:center;justify-content:center;z-index:5;}
 .modal-content{
   background:#1a1a1a;border:2px solid var(--ferrari-red);
   padding:1.5rem;border-radius:10px;width:330px;max-height:90vh;overflow-y:auto;
 }
-.modal-content input, .modal-content textarea, .modal-content select{
-  width:100%;margin-bottom:.7rem;padding:.5rem;border:none;border-radius:4px;font-family:inherit;background:#111;color:#fff;
-}
-.comment-box{background:#111;padding:.5rem;border-radius:4px;margin:.3rem 0;}
-.comment-box small{color:#888;}
-</style>
-}
-body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;}
-/* background video */
-#bgVideo{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  object-fit:cover;z-index:-2;filter:brightness(100%);
-}
-body::before{
-  content:"";position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.45);z-index:-1;
-}
-header{background:var(--ferrari-red);padding:1rem;text-align:center;font-size:1.6rem;font-weight:700;letter-spacing:.5px;}
-.board-switch{text-align:center;margin:1rem;}
-button{cursor:pointer;border:none;border-radius:5px;padding:.6rem 1rem;font-weight:600;transition:.3s;}
-.active{background:var(--ferrari-red);color:var(--white);}
-.inactive{background:var(--gray);color:#bbb;}
-.add-btn{background:var(--ferrari-red);color:var(--white);margin-left:.5rem;}
-.board{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:0 1rem;}
-.column{background:var(--gray);border-radius:10px;min-width:22%;padding:1rem;box-shadow:0 0 10px rgba(0,0,0,.4);}
-.column h2{text-align:center;border-bottom:2px solid var(--ferrari-red);padding-bottom:.5rem;margin-top:0;}
-.task{background:#111;border-left:6px solid var(--ferrari-red);border-radius:6px;margin:.7rem 0;padding:.6rem;box-shadow:0 0 4px rgba(0,0,0,.5);cursor:pointer;}
-.task small{color:#aaa;}
-.red{border-color:#ff3b30;} .orange{border-color:#ff9500;}
-.yellow{border-color:#ffd60a;} .green{border-color:#34c759;}
-/* modals */
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center;z-index:5;}
-.modal-content{background:#1a1a1a;border:2px solid var(--ferrari-red);padding:1.5rem;border-radius:10px;width:330px;max-height:90vh;overflow-y:auto;}
-.modal-content input, .modal-content textarea, .modal-content select{
-  width:100%;margin-bottom:.7rem;padding:.5rem;border:none;border-radius:4px;font-family:inherit;background:#111;color:#fff;
+.modal-content input,.modal-content textarea,.modal-content select{
+  width:100%;margin-bottom:.7rem;padding:.5rem;border:none;border-radius:4px;
+  font-family:inherit;background:#111;color:#fff;
 }
 .comment-box{background:#111;padding:.5rem;border-radius:4px;margin:.3rem 0;}
 .comment-box small{color:#888;}
@@ -98,7 +84,7 @@ button{cursor:pointer;border:none;border-radius:5px;padding:.6rem 1rem;font-weig
 
 <!-- Ferrari Background -->
 <video id="bgVideo" autoplay loop muted playsinline>
-  <source src="public/Recording 2025-10-25 151401.mp4" type="video/mp4">
+  <source src="public/Recording 2025-10-25 151401.mp4" type="video/mp4" />
   Your browser does not support the video tag.
 </video>
 
@@ -134,7 +120,7 @@ button{cursor:pointer;border:none;border-radius:5px;padding:.6rem 1rem;font-weig
   </div>
 </div>
 
-<!-- Task detail + comments modal -->
+<!-- Task detail + comments -->
 <div class="modal" id="detailModal">
   <div class="modal-content">
     <h3 id="detailTitle" style="color:var(--ferrari-red);margin-top:0"></h3>
@@ -152,101 +138,71 @@ button{cursor:pointer;border:none;border-radius:5px;padding:.6rem 1rem;font-weig
 </div>
 
 <script>
-const board=document.getElementById("board");
-const workBtn=document.getElementById("workBtn");
-const personalBtn=document.getElementById("personalBtn");
-const addTaskBtn=document.getElementById("addTaskBtn");
-const modal=document.getElementById("taskModal");
-const saveTask=document.getElementById("saveTask");
-const cancelTask=document.getElementById("cancelTask");
-const detailModal=document.getElementById("detailModal");
-const closeDetail=document.getElementById("closeDetail");
-const addCommentBtn=document.getElementById("addComment");
-
 const columns=["To-Do","In-Progress","Blocked","Done"];
+const board=document.getElementById("board");
 let boardType=localStorage.getItem("boardType")||"work";
-
 let tasks=JSON.parse(localStorage.getItem("ziraTasks")||'{"work":[],"personal":[]}');
 
-function saveToLocal(){
-  localStorage.setItem("ziraTasks",JSON.stringify(tasks));
-  localStorage.setItem("boardType",boardType);
-}
-
-function getColor(dueDate){
-  const d=new Date(dueDate),now=new Date();
-  const diff=(d-now)/(1000*60*60*24);
-  if(diff<0)return"red";if(diff<=1)return"orange";
-  if(diff<=3)return"yellow";return"green";
-}
-
-function renderBoard(){
+function saveLocal(){localStorage.setItem("ziraTasks",JSON.stringify(tasks));localStorage.setItem("boardType",boardType);}
+function getColor(d){const t=new Date(d),n=new Date(),diff=(t-n)/(1000*60*60*24);
+  if(diff<0)return"red";if(diff<=1)return"orange";if(diff<=3)return"yellow";return"green";}
+function render(){
   board.innerHTML="";
-  columns.forEach(col=>{
-    const colDiv=document.createElement("div");
-    colDiv.className="column";
-    colDiv.innerHTML=`<h2>${col}</h2>`;
-    tasks[boardType].filter(t=>t.status===col).forEach((t,i)=>{
-      const color=getColor(t.due);
-      const taskDiv=document.createElement("div");
-      taskDiv.className=`task ${color}`;
-      taskDiv.innerHTML=`<b>${t.title}</b><br><small>Due ${t.due}</small>`;
-      taskDiv.onclick=()=>openDetail(t);
-      colDiv.appendChild(taskDiv);
+  columns.forEach(c=>{
+    const col=document.createElement("div");
+    col.className="column";col.innerHTML=`<h2>${c}</h2>`;
+    tasks[boardType].filter(t=>t.status===c).forEach(t=>{
+      const task=document.createElement("div");
+      task.className=`task ${getColor(t.due)}`;
+      task.innerHTML=`<b>${t.title}</b><br><small>Due ${t.due}</small>`;
+      task.onclick=()=>openDetail(t);
+      col.appendChild(task);
     });
-    board.appendChild(colDiv);
+    board.appendChild(col);
   });
 }
-
-/* modal controls */
-addTaskBtn.onclick=()=>modal.style.display="flex";
-cancelTask.onclick=()=>modal.style.display="none";
-
-saveTask.onclick=()=>{
+document.getElementById("addTaskBtn").onclick=()=>document.getElementById("taskModal").style.display="flex";
+document.getElementById("cancelTask").onclick=()=>document.getElementById("taskModal").style.display="none";
+document.getElementById("saveTask").onclick=()=>{
   const title=document.getElementById("taskTitle").value.trim();
   const desc=document.getElementById("taskDesc").value.trim();
   const due=document.getElementById("taskDue").value;
   const status=document.getElementById("taskStatus").value;
-  if(!title||!due){alert("Title and Due Date required.");return;}
+  if(!title||!due)return alert("Title and Due Date required");
   tasks[boardType].push({id:Date.now(),title,desc,due,status,comments:[]});
-  modal.style.display="none";
-  document.getElementById("taskTitle").value="";
-  document.getElementById("taskDesc").value="";
-  document.getElementById("taskDue").value="";
-  saveToLocal();renderBoard();
+  saveLocal();render();
+  document.getElementById("taskModal").style.display="none";
+  document.getElementById("taskTitle").value=document.getElementById("taskDesc").value=document.getElementById("taskDue").value="";
 };
-
-/* board switch */
-workBtn.onclick=()=>{boardType="work";workBtn.className="active";personalBtn.className="inactive";saveToLocal();renderBoard();};
-personalBtn.onclick=()=>{boardType="personal";personalBtn.className="active";workBtn.className="inactive";saveToLocal();renderBoard();};
-
-/* detail modal */
-function openDetail(task){
-  document.getElementById("detailTitle").textContent=task.title;
-  document.getElementById("detailDesc").textContent=task.desc||"(No description)";
-  document.getElementById("detailStatus").textContent=task.status;
-  document.getElementById("detailDue").textContent=task.due;
-  const list=document.getElementById("commentsList");
-  list.innerHTML="";
-  task.comments.forEach(c=>{
-    const div=document.createElement("div");
-    div.className="comment-box";
-    div.innerHTML=`${c.text}<br><small>${c.date}</small>`;
-    list.appendChild(div);
+document.getElementById("workBtn").onclick=()=>{
+  boardType="work";document.getElementById("workBtn").className="active";
+  document.getElementById("personalBtn").className="inactive";saveLocal();render();
+};
+document.getElementById("personalBtn").onclick=()=>{
+  boardType="personal";document.getElementById("personalBtn").className="active";
+  document.getElementById("workBtn").className="inactive";saveLocal();render();
+};
+function openDetail(t){
+  document.getElementById("detailTitle").textContent=t.title;
+  document.getElementById("detailDesc").textContent=t.desc||"(No description)";
+  document.getElementById("detailStatus").textContent=t.status;
+  document.getElementById("detailDue").textContent=t.due;
+  const list=document.getElementById("commentsList");list.innerHTML="";
+  t.comments.forEach(c=>{
+    const d=document.createElement("div");d.className="comment-box";
+    d.innerHTML=`${c.text}<br><small>${c.date}</small>`;list.appendChild(d);
   });
-  detailModal.style.display="flex";
-  addCommentBtn.onclick=()=>{
+  document.getElementById("detailModal").style.display="flex";
+  document.getElementById("addComment").onclick=()=>{
     const txt=document.getElementById("newComment").value.trim();
     if(!txt)return;
-    task.comments.push({text:txt,date:new Date().toLocaleString()});
+    t.comments.push({text:txt,date:new Date().toLocaleString()});
     document.getElementById("newComment").value="";
-    saveToLocal();openDetail(task);
+    saveLocal();openDetail(t);
   };
 }
-closeDetail.onclick=()=>detailModal.style.display="none";
-
-/* init */
-renderBoard();
+document.getElementById("closeDetail").onclick=()=>document.getElementById("detailModal").style.display="none";
+render();
 </script>
 </body>
 </html>
