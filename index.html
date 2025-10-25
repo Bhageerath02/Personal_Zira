@@ -1,133 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Personal Zira 🏎️</title>
-  <style>
-    :root{
-      --ferrari-red:#d70000;
-      --dark:#111;
-      --gray:#222;
-      --white:#fff;
-    }
-    body{margin:0;font-family:Roboto,Arial,Helvetica,sans-serif;background:var(--dark);color:var(--white);}
-    header{background:var(--ferrari-red);padding:1rem;text-align:center;font-size:1.6rem;font-weight:700;letter-spacing:1px;}
-    .board-switch{text-align:center;margin:1rem;}
-    button{cursor:pointer;border:none;border-radius:5px;padding:.6rem 1rem;font-weight:600;transition:.3s;}
-    .active{background:var(--ferrari-red);color:var(--white);}
-    .inactive{background:var(--gray);color:#bbb;}
-    .add-btn{background:var(--ferrari-red);color:var(--white);margin-left:.5rem;}
-    .board{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:0 1rem;}
-    .column{background:var(--gray);border-radius:10px;min-width:22%;padding:1rem;box-shadow:0 0 10px rgba(0,0,0,.4);}
-    .column h2{text-align:center;border-bottom:2px solid var(--ferrari-red);padding-bottom:.5rem;margin-top:0;}
-    .task{background:#1c1c1c;border-left:6px solid var(--ferrari-red);border-radius:6px;margin:.7rem 0;padding:.6rem;box-shadow:0 0 4px rgba(0,0,0,.5);}
-    .task small{color:#aaa;}
-    /* due-date color indicators */
-    .red{border-color:#ff3b30;}
-    .orange{border-color:#ff9500;}
-    .yellow{border-color:#ffd60a;}
-    .green{border-color:#34c759;}
-    /* modal */
-    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center;}
-    .modal-content{background:#1a1a1a;border:2px solid var(--ferrari-red);padding:1.5rem;border-radius:10px;width:320px;}
-    .modal-content input, .modal-content textarea, .modal-content select{
-      width:100%;margin-bottom:.7rem;padding:.5rem;border:none;border-radius:4px;font-family:inherit;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Zira 🏎️ Ferrari Edition</title>
+<style>
+:root{
+  --ferrari-red:#d70000;
+  --dark:#0b0b0b;
+  --gray:#1c1c1c;
+  --white:#fff;
+}
+body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;}
+/* background video */
+#bgVideo{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  object-fit:cover;z-index:-2;filter:brightness(55%);
+}
+body::before{
+  content:"";position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.45);z-index:-1;
+}
+header{background:var(--ferrari-red);padding:1rem;text-align:center;font-size:1.6rem;font-weight:700;letter-spacing:.5px;}
+.board-switch{text-align:center;margin:1rem;}
+button{cursor:pointer;border:none;border-radius:5px;padding:.6rem 1rem;font-weight:600;transition:.3s;}
+.active{background:var(--ferrari-red);color:var(--white);}
+.inactive{background:var(--gray);color:#bbb;}
+.add-btn{background:var(--ferrari-red);color:var(--white);margin-left:.5rem;}
+.board{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:0 1rem;}
+.column{background:var(--gray);border-radius:10px;min-width:22%;padding:1rem;box-shadow:0 0 10px rgba(0,0,0,.4);}
+.column h2{text-align:center;border-bottom:2px solid var(--ferrari-red);padding-bottom:.5rem;margin-top:0;}
+.task{background:#111;border-left:6px solid var(--ferrari-red);border-radius:6px;margin:.7rem 0;padding:.6rem;box-shadow:0 0 4px rgba(0,0,0,.5);cursor:pointer;}
+.task small{color:#aaa;}
+.red{border-color:#ff3b30;} .orange{border-color:#ff9500;}
+.yellow{border-color:#ffd60a;} .green{border-color:#34c759;}
+/* modals */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center;z-index:5;}
+.modal-content{background:#1a1a1a;border:2px solid var(--ferrari-red);padding:1.5rem;border-radius:10px;width:330px;max-height:90vh;overflow-y:auto;}
+.modal-content input, .modal-content textarea, .modal-content select{
+  width:100%;margin-bottom:.7rem;padding:.5rem;border:none;border-radius:4px;font-family:inherit;background:#111;color:#fff;
+}
+.comment-box{background:#111;padding:.5rem;border-radius:4px;margin:.3rem 0;}
+.comment-box small{color:#888;}
+</style>
 </head>
 <body>
-  <header>🏎️ Personal Zira – Ferrari Edition</header>
 
-  <div class="board-switch">
-    <button id="workBtn" class="active">Work Board</button>
-    <button id="personalBtn" class="inactive">Personal Board</button>
-    <button id="addTaskBtn" class="add-btn">＋ Add Task</button>
-  </div>
+<!-- Ferrari Background -->
+<video id="bgVideo" autoplay loop muted playsinline>
+  <source src="public/Recording 2025-10-25 151401.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
-  <div class="board" id="board"></div>
+<header>🏎️ Personal Zira – Ferrari Edition</header>
 
-  <!-- Modal -->
-  <div class="modal" id="taskModal">
-    <div class="modal-content">
-      <h3 style="text-align:center;margin-top:0;color:var(--ferrari-red)">Add New Task</h3>
-      <input id="taskTitle" placeholder="Title" />
-      <textarea id="taskDesc" rows="3" placeholder="Description"></textarea>
-      <label>Due Date:</label>
-      <input id="taskDue" type="date" />
-      <label>Status:</label>
-      <select id="taskStatus">
-        <option>To-Do</option>
-        <option>In-Progress</option>
-        <option>Blocked</option>
-        <option>Done</option>
-      </select>
-      <div style="text-align:center;">
-        <button id="saveTask" class="add-btn">Save</button>
-        <button id="cancelTask" class="inactive">Cancel</button>
-      </div>
+<div class="board-switch">
+  <button id="workBtn" class="active">Work Board</button>
+  <button id="personalBtn" class="inactive">Personal Board</button>
+  <button id="addTaskBtn" class="add-btn">＋ Add Task</button>
+</div>
+
+<div class="board" id="board"></div>
+
+<!-- Task creation modal -->
+<div class="modal" id="taskModal">
+  <div class="modal-content">
+    <h3 style="text-align:center;margin-top:0;color:var(--ferrari-red)">Add New Task</h3>
+    <input id="taskTitle" placeholder="Title" />
+    <textarea id="taskDesc" rows="3" placeholder="Description"></textarea>
+    <label>Due Date:</label>
+    <input id="taskDue" type="date" />
+    <label>Status:</label>
+    <select id="taskStatus">
+      <option>To-Do</option>
+      <option>In-Progress</option>
+      <option>Blocked</option>
+      <option>Done</option>
+    </select>
+    <div style="text-align:center;">
+      <button id="saveTask" class="add-btn">Save</button>
+      <button id="cancelTask" class="inactive">Cancel</button>
     </div>
   </div>
+</div>
 
-  <script>
-    const board=document.getElementById("board");
-    const workBtn=document.getElementById("workBtn");
-    const personalBtn=document.getElementById("personalBtn");
-    const addTaskBtn=document.getElementById("addTaskBtn");
-    const modal=document.getElementById("taskModal");
-    const saveTask=document.getElementById("saveTask");
-    const cancelTask=document.getElementById("cancelTask");
+<!-- Task detail + comments modal -->
+<div class="modal" id="detailModal">
+  <div class="modal-content">
+    <h3 id="detailTitle" style="color:var(--ferrari-red);margin-top:0"></h3>
+    <p id="detailDesc"></p>
+    <p><b>Status:</b> <span id="detailStatus"></span></p>
+    <p><b>Due:</b> <span id="detailDue"></span></p>
+    <h4>Comments</h4>
+    <div id="commentsList"></div>
+    <textarea id="newComment" rows="2" placeholder="Add a comment..."></textarea>
+    <div style="text-align:center;">
+      <button id="addComment" class="add-btn">Add Comment</button>
+      <button id="closeDetail" class="inactive">Close</button>
+    </div>
+  </div>
+</div>
 
-    const columns=["To-Do","In-Progress","Blocked","Done"];
-    let boardType="work";
+<script>
+const board=document.getElementById("board");
+const workBtn=document.getElementById("workBtn");
+const personalBtn=document.getElementById("personalBtn");
+const addTaskBtn=document.getElementById("addTaskBtn");
+const modal=document.getElementById("taskModal");
+const saveTask=document.getElementById("saveTask");
+const cancelTask=document.getElementById("cancelTask");
+const detailModal=document.getElementById("detailModal");
+const closeDetail=document.getElementById("closeDetail");
+const addCommentBtn=document.getElementById("addComment");
 
-    const tasks={work:[],personal:[]};
+const columns=["To-Do","In-Progress","Blocked","Done"];
+let boardType=localStorage.getItem("boardType")||"work";
 
-    function getColor(dueDate){
-      const d=new Date(dueDate);const now=new Date();
-      const diff=(d-now)/(1000*60*60*24);
-      if(diff<0)return"red";
-      if(diff<=1)return"orange";
-      if(diff<=3)return"yellow";
-      return"green";
-    }
+let tasks=JSON.parse(localStorage.getItem("ziraTasks")||'{"work":[],"personal":[]}');
 
-    function renderBoard(){
-      board.innerHTML="";
-      columns.forEach(col=>{
-        const colDiv=document.createElement("div");
-        colDiv.className="column";
-        colDiv.innerHTML=`<h2>${col}</h2>`;
-        tasks[boardType].filter(t=>t.status===col).forEach(t=>{
-          const color=getColor(t.due);
-          colDiv.innerHTML+=`<div class="task ${color}"><b>${t.title}</b><br>${t.desc}<br><small>Due ${t.due}</small></div>`;
-        });
-        board.appendChild(colDiv);
-      });
-    }
+function saveToLocal(){
+  localStorage.setItem("ziraTasks",JSON.stringify(tasks));
+  localStorage.setItem("boardType",boardType);
+}
 
-    // board switch
-    workBtn.onclick=()=>{boardType="work";workBtn.className="active";personalBtn.className="inactive";renderBoard();};
-    personalBtn.onclick=()=>{boardType="personal";personalBtn.className="active";workBtn.className="inactive";renderBoard();};
+function getColor(dueDate){
+  const d=new Date(dueDate),now=new Date();
+  const diff=(d-now)/(1000*60*60*24);
+  if(diff<0)return"red";if(diff<=1)return"orange";
+  if(diff<=3)return"yellow";return"green";
+}
 
-    // modal controls
-    addTaskBtn.onclick=()=>modal.style.display="flex";
-    cancelTask.onclick=()=>modal.style.display="none";
-    saveTask.onclick=()=>{
-      const title=document.getElementById("taskTitle").value.trim();
-      const desc=document.getElementById("taskDesc").value.trim();
-      const due=document.getElementById("taskDue").value;
-      const status=document.getElementById("taskStatus").value;
-      if(!title||!due){alert("Title and Due Date required.");return;}
-      tasks[boardType].push({title,desc,due,status});
-      modal.style.display="none";
-      document.getElementById("taskTitle").value="";
-      document.getElementById("taskDesc").value="";
-      document.getElementById("taskDue").value="";
-      renderBoard();
-    };
+function renderBoard(){
+  board.innerHTML="";
+  columns.forEach(col=>{
+    const colDiv=document.createElement("div");
+    colDiv.className="column";
+    colDiv.innerHTML=`<h2>${col}</h2>`;
+    tasks[boardType].filter(t=>t.status===col).forEach((t,i)=>{
+      const color=getColor(t.due);
+      const taskDiv=document.createElement("div");
+      taskDiv.className=`task ${color}`;
+      taskDiv.innerHTML=`<b>${t.title}</b><br><small>Due ${t.due}</small>`;
+      taskDiv.onclick=()=>openDetail(t);
+      colDiv.appendChild(taskDiv);
+    });
+    board.appendChild(colDiv);
+  });
+}
 
-    renderBoard();
-  </script>
+/* modal controls */
+addTaskBtn.onclick=()=>modal.style.display="flex";
+cancelTask.onclick=()=>modal.style.display="none";
+
+saveTask.onclick=()=>{
+  const title=document.getElementById("taskTitle").value.trim();
+  const desc=document.getElementById("taskDesc").value.trim();
+  const due=document.getElementById("taskDue").value;
+  const status=document.getElementById("taskStatus").value;
+  if(!title||!due){alert("Title and Due Date required.");return;}
+  tasks[boardType].push({id:Date.now(),title,desc,due,status,comments:[]});
+  modal.style.display="none";
+  document.getElementById("taskTitle").value="";
+  document.getElementById("taskDesc").value="";
+  document.getElementById("taskDue").value="";
+  saveToLocal();renderBoard();
+};
+
+/* board switch */
+workBtn.onclick=()=>{boardType="work";workBtn.className="active";personalBtn.className="inactive";saveToLocal();renderBoard();};
+personalBtn.onclick=()=>{boardType="personal";personalBtn.className="active";workBtn.className="inactive";saveToLocal();renderBoard();};
+
+/* detail modal */
+function openDetail(task){
+  document.getElementById("detailTitle").textContent=task.title;
+  document.getElementById("detailDesc").textContent=task.desc||"(No description)";
+  document.getElementById("detailStatus").textContent=task.status;
+  document.getElementById("detailDue").textContent=task.due;
+  const list=document.getElementById("commentsList");
+  list.innerHTML="";
+  task.comments.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="comment-box";
+    div.innerHTML=`${c.text}<br><small>${c.date}</small>`;
+    list.appendChild(div);
+  });
+  detailModal.style.display="flex";
+  addCommentBtn.onclick=()=>{
+    const txt=document.getElementById("newComment").value.trim();
+    if(!txt)return;
+    task.comments.push({text:txt,date:new Date().toLocaleString()});
+    document.getElementById("newComment").value="";
+    saveToLocal();openDetail(task);
+  };
+}
+closeDetail.onclick=()=>detailModal.style.display="none";
+
+/* init */
+renderBoard();
+</script>
 </body>
 </html>
