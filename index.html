@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Zira</title>
+  <style>
+    body { font-family: sans-serif; background:#f7f8fa; margin:0; padding:0; }
+    header { background:#1f2937; color:#fff; padding:1rem; text-align:center; font-size:1.5rem; }
+    .board-switch { text-align:center; margin:1rem 0; }
+    button { margin:0 .5rem; padding:.5rem 1rem; border:none; border-radius:4px; cursor:pointer; }
+    .active { background:#2563eb; color:white; }
+    .board { display:flex; justify-content:space-around; flex-wrap:wrap; gap:1rem; margin:0 1rem; }
+    .column { background:white; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); width:22%; padding:1rem; }
+    .column h2 { text-align:center; border-bottom:1px solid #e5e7eb; padding-bottom:.5rem; }
+    .task { border-left:5px solid #2563eb; margin:.5rem 0; padding:.5rem; border-radius:5px; background:#f9fafb; }
+    .task.red { border-color:#dc2626; }
+    .task.orange { border-color:#f97316; }
+    .task.yellow { border-color:#eab308; }
+    .task.green { border-color:#16a34a; }
+    .task small { color:#6b7280; }
+    textarea { width:100%; resize:none; margin-top:.5rem; }
+    input, textarea, select { font-family:inherit; }
+  </style>
+</head>
+<body>
+  <header>🗂️ Personal Zira</header>
+
+  <div class="board-switch">
+    <button id="workBtn" class="active">Work Board</button>
+    <button id="personalBtn">Personal Board</button>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <script>
+    const board = document.getElementById("board");
+    const workBtn = document.getElementById("workBtn");
+    const personalBtn = document.getElementById("personalBtn");
+
+    const columns = ["To-Do","In-Progress","Blocked","Done"];
+    let boardType = "work";
+
+    const tasks = {
+      work: [],
+      personal: []
+    };
+
+    function renderBoard() {
+      board.innerHTML = "";
+      columns.forEach(col => {
+        const colDiv = document.createElement("div");
+        colDiv.className = "column";
+        colDiv.innerHTML = `<h2>${col}</h2>`;
+        tasks[boardType]
+          .filter(t => t.status===col)
+          .forEach(t => {
+            const color = getColor(t.due);
+            colDiv.innerHTML += `<div class="task ${color}"><b>${t.title}</b><br>${t.desc}<br><small>Due: ${t.due}</small></div>`;
+          });
+        board.appendChild(colDiv);
+      });
+    }
+
+    function getColor(dueDate){
+      const d = new Date(dueDate);
+      const now = new Date();
+      const diff = (d-now)/(1000*60*60*24);
+      if(diff<0) return "red";
+      if(diff<=1) return "orange";
+      if(diff<=3) return "yellow";
+      return "green";
+    }
+
+    workBtn.onclick = ()=>{ boardType="work"; workBtn.classList.add("active"); personalBtn.classList.remove("active"); renderBoard(); };
+    personalBtn.onclick = ()=>{ boardType="personal"; personalBtn.classList.add("active"); workBtn.classList.remove("active"); renderBoard(); };
+
+    // sample starter data
+    tasks.work.push({title:"Demo Task",desc:"Show this works",due:"2025-10-26",status:"To-Do"});
+    renderBoard();
+  </script>
+</body>
+</html>
